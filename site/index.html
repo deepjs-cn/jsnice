@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en-US" class="wf-inactive">
+<head profile="http://gmpg.org/xfn/11">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS NICE: Statistical renaming, Type inference and Deobfuscation</title>
+<meta name="description" content="JS NICE | Software Reliability Lab in ETH" />
+<meta property="og:image" content="http://jsnice.org/jsnicebig1.png"/>
+<style type="text/css">
+  .wf-loading body {visibility: hidden;}
+</style>
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" />
+<link type="text/css" rel="stylesheet" href="css/jquery.dropdown.css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+<script src="js/codemirror.js"></script>
+<link rel="stylesheet" href="css/codemirror.css">
+<script src="js/javascript.js"></script>
+<script type="text/javascript">
+(function(d) {
+var config = {
+  kitId: 'svt4rus',
+  scriptTimeout: 1000
+},
+h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+})(document);
+</script>
+</head>
+<body>
+  <div id="header_wrapper">
+    <div id="header" class="content_wrapper">
+      <div id="nav">
+        <div class="srl">
+          <span class="main_logo">
+          <a href="http://jsnice.org/" target="_blank"><img id="jsnice_logo" src="img/js_nice-logo_knockout.png"></a>
+          </span>
+          <span class="tagline">
+            <span class="large_screen">
+              Statistical renaming, Type inference and Deobfuscation
+            </span>
+          </span>
+        </div>
+        <ul class=" clearfix ">
+          <li><a href="#" id="about">About</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="dropdown-1" class="dropdown dropdown-tip">
+    <ul class="dropdown-menu">
+      <li><label for="rename"><input type="checkbox" id="rename" checked="">Rename local variables</label></li>
+      <li><label for="types"><input type="checkbox" id="types" checked="">Infer types</label></li>
+      <li><label for="packers"><input type="checkbox" id="packers" checked="">Detect packers</label></li>
+      <li><label for="transpile"><input type="checkbox" id="transpile" unchecked="">Transpile to ES5</label></li>
+      <li><label for="pretty"><input type="checkbox" id="pretty" checked="" disabled="">Pretty print</label></li>
+        <li class="dropdown-divider"></li>
+      <li><label for="suggest"><input type="checkbox" id="suggest">
+      Interactive renames<br>(click on names to change)<br></label></li>
+<!--        <li class="dropdown-divider" id="setting1"></li>
+      <li class="dropdown-text" id="setting2">Click "Nicify JavaScript" for the setting change to take effect</li>-->
+    </ul>
+  </div>
+
+  <div id="dropdown-2" class="dropdown dropdown-tip">
+    <ul class="dropdown-menu" id="rename-items">
+      <li><a href="#">x</a></li>
+      <li><a href="#">y</a></li>
+    </ul>
+  </div>
+
+
+  <div class="container">
+    <div class="content_wrapper" id="tool">
+      <div class="clearfix app_section">
+        <div class="input_col">
+          <div class="input_header clearfix">
+            <h5><div class="large_screen title">Enter&nbsp;</div>JavaScript</h5>
+            <input type="submit" class="submit-button" name="submit" id="submit" value="  Nicify JavaScript  ">
+            <input type="submit" class="settings" name="settings" id="settings" value="" data-dropdown="#dropdown-1">
+          </div>
+<textarea rows="16" cols="120" id="inputjs" class="input_section ">
+// Put your JavaScript here that you want to rename, deobfuscate,
+// or infer types for:
+function chunkData(e, t) {
+  var n = [];
+  var r = e.length;
+  var i = 0;
+  for (; i < r; i += t) {
+  if (i + t < r) {
+    n.push(e.substring(i, i + t));
+  } else {
+    n.push(e.substring(i, r));
+  }
+  }
+  return n;
+}
+// You can also use some ES6 features.
+const get = (a,b) => a.getElementById(b);
+
+</textarea>
+        </div>
+        <div class="results_col">
+          <div class="results_area">
+            <div class="input_header clearfix">
+              <h5><span id="resultslabel"> <b>←</b> Click "Nicify JavaScript"</span></h5>
+              <div class="hidden" id="feedback_question">
+                <h5><span> Are you satisfied?</span></h5>
+                <input type="submit" class="submit-button" name="dissatisfied" id="dissatisfied" value="  No  ">
+                <input type="submit" class="submit-button" name="satisfied" id="satisfied" value="  Yes  ">
+              </div>
+              <input type="submit" class="submit-button hidden" name="submit_feedback" id="submit_feedback" value="  Submit feedback  ">
+            </div>
+            <textarea rows="16" cols="120" id="outputjs" readonly="" class="input_section">
+            </textarea>
+
+            <div class="intro_area_overlay hidden" id="settings_change">
+              <div class="notice_area">
+                <div class="input_header clearfix">
+                  <h5>Changed settings: Click "Nicify JavaScript" to see updated code</h5>
+                </div>
+              </div>
+            </div>
+            <div class="intro_area_overlay" id="intro_area_overlay">
+              <div class="intro_area">
+                <div class="input_header clearfix">
+                  <h5> Welcome to updated JSNice <span style="color:red"> (March 2018) </span> </h5>
+                </div>
+                <div class="intro_slide">
+                  <h4> What's new in JSNice?</h4>
+
+                  <ul>
+                    <li> Support for ECMASCRIPT 6.
+                    </li>
+                    <li> Built-in packers detector.
+                    </li>
+                    <li> Possibility to transpile not yet supported code.
+                    </li>
+                    <li>
+                        Increased prediction accuracy.
+                    </li>
+                    <li>
+                      Ability to provide direct feedback on JSNice predictions.
+                    </li>
+                  </ul>
+                  <h4 style="margin-bottom:1px;"> Feedback wanted! </h4>
+                  <p style="margin-bottom:5px;"> Please fill <a href="https://goo.gl/forms/0GjLDRzY8P3k59rq2" target="_blank">the feedback form </a> or contact prof. Martin Vechev directly by email firstname.lastname@inf.ethz.ch. </p>
+
+                  <h4> What JSNice does for you?</h4>
+                  <ul>
+                    <li>Make even obfuscated JavaScript code readable.
+                    </li>
+                    <li>
+                      Rename variables and parameters to names
+                      learned from thousands of open source projects.
+                    </li>
+                    <li>Infer type annotations.
+                    </li>
+                    <li>
+                      Override the names suggested by JSNice (by enabling "interactive renames" in settings).
+                    </li>
+                    <li>
+                    Click <a href="http://plml.ethz.ch/" target="_blank">here </a> to learn more about the research done at SRI lab at ETH Zurich that produced JSNice and other ML based systems.
+                    </li>
+
+                  </ul>
+
+                  <h4 style="margin-bottom:1px;"> Disclaimer</h4>
+                  <p style="margin-bottom:5px;">This service is provided by Secure, Reliable, and Intelligent Systems Lab at ETH Zurich, Department of Computer Science, and is free of charge. We accept only legal pieces of code. All entries are logged for research and improvement of service. ETH Zurich does not warrant any rights or service levels, nor does it acquire any rights on the code entered. Swiss law is applicable. The place of jurisdiction is Zurich, Switzerland. By entering code on this site, you warrant that all your entries are in your sole responsibility and you do not infringe any laws or third-party rights like copyrights and the like. ETH Zurich and its employees shall not be liable for any entries and for any damages resulting thereof. You agree to indemnify, defend and hold them harmless from any legal or financial demands or arising out of the breach of these terms of use, especially from third-party claims regarding infringement of copyrights and the like.
+
+                  <p>
+                    <b>New!:</b> <a href="http://apk-deguard.com/" target="_blank">APK-Deguard</a> deobfuscates Android applications. Check it out!
+
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer" class="content_wrapper">
+    <p>© JS NICE | jsnice.org | <a href="http://www.sri.inf.ethz.ch/" target="_blank">Secure, Reliable, and Intelligent Systems Lab</a>, <a href="http://www.inf.ethz.ch/" target="_blank">Computer Science Department</a>, <a href="http://www.ethz.ch/index_EN" target="_blank">ETH Zurich</a></p>
+    <div class="shareboxes_low clearfix">
+        <div class="sharebox">
+        <div class="fb-like" data-show-faces="false" data-layout="button_count" data-width="90"></div>
+      </div>
+      <div class="sharebox ">
+        <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+      </div>
+      <div class="sharebox">
+        <a href="http://twitter.com/share" class="twitter-share-button" data-text="Updated JSNice.org with ES6 support : statistical renaming and deobfuscation for JavaScript. http://jsnice.org/" data-via="">Tweet</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-51565486-1"></script> -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-51565486-1');
+  </script>
+
+
+  <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/node-forge@0.7.0/dist/forge.min.js"></script>
+  <script src="js/global.js"></script>
+  <script src="js/jquery.dropdown.min.js"></script>
+</body>
+</html>
